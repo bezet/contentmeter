@@ -17,16 +17,9 @@
 }
 
 .content-container {
-	width: 66.666%;
-	max-width: 960px;
+	width: 100%;
+	max-width: 768px;
 	margin: 0 auto;
-}
-
-@media screen and (min-width: 960px) {
-	.content-container {
-		width: 66.666%;
-		max-width: 960px;
-	}
 }
 
 .content-container p {
