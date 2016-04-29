@@ -1,0 +1,1 @@
+var contProgBar1 = new ContentMeter("#cpb1", "#content_container");
