@@ -14,18 +14,18 @@ function ContentMeter(barSelector, contSelector, options) {
 
 ContentMeter.prototype = {
 
-	getDOMElement: function(selector) {
+	getDOMElement: function(selectorProp) {
 		var base = this,
 			element;
 
-		if (typeof base[selector] === "string" 
-				&& base[selector].indexOf("#") !== -1 
-				&& base[selector].indexOf("#") === 0) {
+		if (typeof base[selectorProp] === "string" 
+				&& base[selectorProp].indexOf("#") !== -1 
+				&& base[selectorProp].indexOf("#") === 0) {
 
-			element = document.getElementById(base[selector].slice(1));
+			element = document.getElementById(base[selectorProp].slice(1));
 
-		} else if (typeof selector === "object") {
-			element = selector;
+		} else if (typeof base[selectorProp] === "object") {
+			element = base[selectorProp];
 
 		} else {
 			element = {};
