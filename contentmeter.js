@@ -54,9 +54,13 @@ ContentMeter.prototype = {
 		base.barContainer.style.overflow = "hidden";
 
 		bar = document.createElement("div");
-		bar.classList.add("contentmeter-bar");
 		bar.style.width = base.getBarWidth() + "%";
-		
+		bar.classList.add("contentmeter-bar");
+
+		if (base.settings.invisibilityClass) {
+			base.updateClasses();
+		}
+
 		base.bar = bar;
 		base.barContainer.appendChild(bar);
 
