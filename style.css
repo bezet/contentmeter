@@ -19,5 +19,6 @@
 .content-container {
 	width: 100%;
 	max-width: 768px;
-	margin: 0 auto 500px;
+	/*margin: 0 auto 500px;*/
+	margin: 1500px auto;
 }
