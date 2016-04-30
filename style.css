@@ -2,7 +2,7 @@
 	box-sizing: border-box;
 }
 
-.cpb1-container {
+.contentmeter {
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -10,7 +10,7 @@
 	height: 5px;
 }
 
-.cpb1-container .cpb1-bar {
+.contentmeter .contentmeter-bar {
 	height: 100%;
 	width: 33%;
 	background-color: #d90000;
@@ -19,9 +19,5 @@
 .content-container {
 	width: 100%;
 	max-width: 768px;
-	margin: 0 auto;
-}
-
-.content-container p {
-	
+	margin: 0 auto 500px;
 }
