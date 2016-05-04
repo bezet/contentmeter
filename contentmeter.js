@@ -136,9 +136,9 @@ ContentMeter.prototype = {
 			offset        : base.contContainer.offsetTop
 		}
 
-		// base.content.visibleHeight =
-		// 	base.content.visibleHeight > window.innerHeight ?
-		// 		window.innerHeight : base.content.visibleHeight;
+		base.content.visibleHeight =
+			base.content.visibleHeight > window.innerHeight ?
+				window.innerHeight : base.content.visibleHeight;
 	},
 
 	checkLimit: function(limited, min, max) {
