@@ -27,6 +27,12 @@ ContentMeter.prototype = {
 
 				element = document.getElementById(selector.slice(1));
 
+			} else if (typeof selector === "object"
+				&& selector.nodeType !== undefined
+				&& selector.length === undefined) {
+
+				element = selector;
+
 			} else {
 				element = null;
 			}
