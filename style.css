@@ -96,16 +96,25 @@ html {
 .arrow {
 	display: block;
 	position: relative;
-	top: 50vh;
 	width: 0;
 	height: 0;
 	margin: 0 auto;
 
+    animation: .5s linear 0s infinite alternate bouncing_arrow;
+}
+
+.arrow.arrow-up {
+	bottom: 50vh;
+	border-left: 36px solid transparent;
+	border-right: 36px solid transparent;
+	border-bottom: 36px solid #4D3333;
+}
+
+.arrow.arrow-down {
+	top: 50vh;
 	border-left: 36px solid transparent;
 	border-right: 36px solid transparent;
 	border-top: 36px solid #4D3333;
-
-    animation: .5s linear 0s infinite alternate bouncing_arrow;
 }
 
 @keyframes bouncing_arrow { 

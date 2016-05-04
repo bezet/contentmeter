@@ -5,8 +5,6 @@ function ContentMeter(barSelector, contSelector, options) {
 
 	this.options = options;
 	this.settings = {
-		barByWidth: true,
-		barByPosition: false,
 		invisibilityClass: true
 	}
 
@@ -29,11 +27,8 @@ ContentMeter.prototype = {
 
 				element = document.getElementById(selector.slice(1));
 
-			} else if (typeof selector === "object") {
-				element = selector;
-
 			} else {
-				element = {};
+				element = null;
 			}
 
 			return element;
@@ -47,11 +42,14 @@ ContentMeter.prototype = {
 		}
 
 		// If exclusive options set to true, leave only first one enabled
-		if (settings.barByWidth && settings.barByPosition) settings.barByPosition = false;
+		// if (settings.barByWidth && settings.barByPosition) settings.barByPosition = false;
 
-		base.readContentDimensions();
-
-		base.createMeter();
+		if (base.barContainer !== null && base.contContainer !== null) {
+			base.readContentDimensions();
+			base.createMeter();
+		} else {
+			throw new Error("Wrong selectors or given selectors match no elements.");
+		}
 	},
 
 	createMeter: function() {
@@ -63,17 +61,10 @@ ContentMeter.prototype = {
 		bar = document.createElement("div");
 		bar.classList.add("contentmeter-bar");
 
-		if (base.settings.barByWidth) {
-			if (base.content.visibleHeight > window.innerHeight) {
-				bar.style.width = base.getBarWidth() + "%";
-			} else {
-				bar.style.width = base.getBarWidth2() + "%";
-			}
-		}
-
-		if (base.settings.barByPosition) {
-			bar.setAttribute("style", "position: absolute; width: 100%;");
-			bar.style.left = base.getBarPosition() + "%";
+		if (!base.content.selfScrolled) {
+			bar.style.width = base.getBarWidth() + "%";
+		} else {
+			bar.style.width = base.getBarWidth2() + "%";
 		}
 
 		if (base.settings.invisibilityClass) {
@@ -90,28 +81,21 @@ ContentMeter.prototype = {
 		var base = this,
 			bar  = base.bar;
 
-		if (base.settings.barByWidth) {
-			if (base.content.visibleHeight > window.innerHeight) {
+		if (!base.content.selfScrolled) {
+			window.addEventListener("scroll", function() {
+				bar.style.width = base.getBarWidth() + "%";
+			});
+
+		} else {
+			base.contContainer.addEventListener("scroll", function() {
+				bar.style.width = base.getBarWidth2() + "%";
+			});
+			
+			if (base.settings.invisibilityClass) {
 				window.addEventListener("scroll", function() {
-					bar.style.width = base.getBarWidth() + "%";
-				});
-			} else {
-				base.contContainer.addEventListener("scroll", function() {
-					bar.style.width = base.getBarWidth2() + "%";
+					base.updateClasses();
 				});
 			}
-		}
-
-		if (base.settings.barByPosition) {
-			window.addEventListener("scroll", function() {
-				bar.style.left = base.getBarPosition() + "%";
-			});
-		}
-
-		if (base.settings.invisibilityClass) {
-			window.addEventListener("scroll", function() {
-				base.updateClasses();
-			});
 		}
 
 		window.addEventListener("resize", function() {
@@ -133,12 +117,19 @@ ContentMeter.prototype = {
 		base.content = {
 			height        : base.contContainer.scrollHeight,
 			visibleHeight : base.contContainer.clientHeight,
-			offset        : base.contContainer.offsetTop
+			offset        : base.contContainer.offsetTop,
+			selfScrolled  : false
 		}
 
-		base.content.visibleHeight =
-			base.content.visibleHeight > window.innerHeight ?
-				window.innerHeight : base.content.visibleHeight;
+		if (base.content.visibleHeight > window.innerHeight) {
+			base.content.visibleHeight = window.innerHeight;
+		} else {
+			base.content.selfScrolled = true;
+		}
+
+		// base.content.visibleHeight =
+		// 	base.content.visibleHeight > window.innerHeight ?
+		// 		window.innerHeight : base.content.visibleHeight;
 	},
 
 	checkLimit: function(limited, min, max) {
@@ -187,28 +178,6 @@ ContentMeter.prototype = {
 		barW = base.checkLimit(barW, 0, 100);
 
 		return barW;
-	},
-
-	getBarPosition: function() {
-		var base   = this,
-			barPos = 0;
-
-		if (!base.content) {
-			base.readContentDimensions();
-		}
-
-		barPos = (
-			base.getDocScrolltop()
-			- base.content.offset
-			+ base.content.visibleHeight
-			) / base.content.height * 100;
-
-		// barPos = barPos > 0 ? barPos : 0;
-		// barPos = barPos < 100 ? barPos : 100;
-
-		barPos = barPos - 100;
-
-		return barPos;
 	},
 
 	updateClasses: function() {
