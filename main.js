@@ -1,1 +1,2 @@
-var contMeter1 = new ContentMeter("#contentmeter1", "#content_container", { invisibilityClass: false });
+var contMeter1 = new ContentMeter("#contentmeter1", "#content_container1", { invisibilityClass: false });
+var contMeter2 = new ContentMeter("#contentmeter2", "#content_container2", { invisibilityClass: false });

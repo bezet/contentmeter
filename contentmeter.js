@@ -5,17 +5,19 @@ function ContentMeter(barSelector, contSelector, options) {
 
 	this.options = options;
 	this.settings = {
+		barByWidth: true,
+		barByPosition: false,
 		invisibilityClass: true
-	};
+	}
 
 	this.init();
-};
+}
 
 ContentMeter.prototype = {
 
 	init: function() {
-		var base = this,
-			options = base.options, 
+		var base     = this,
+			options  = base.options, 
 			settings = base.settings;
 
 		function getDOMElement(selector) {
@@ -42,7 +44,10 @@ ContentMeter.prototype = {
 
 		for (var option in options) {
 			settings[option] = options[option];
-		};
+		}
+
+		// If exclusive options set to true, leave only first one enabled
+		if (settings.barByWidth && settings.barByPosition) settings.barByPosition = false;
 
 		base.createMeter();
 	},	
@@ -54,8 +59,16 @@ ContentMeter.prototype = {
 		base.barContainer.style.overflow = "hidden";
 
 		bar = document.createElement("div");
-		bar.style.width = base.getBarWidth() + "%";
 		bar.classList.add("contentmeter-bar");
+		
+		if (base.settings.barByWidth) {
+			bar.style.width = base.getBarWidth() + "%";
+		}
+		
+		if (base.settings.barByPosition) {
+			bar.setAttribute("style", "position: absolute; width: 100%;");
+			bar.style.left = base.getBarPosition() + "%";
+		}
 
 		if (base.settings.invisibilityClass) {
 			base.updateClasses();
@@ -71,15 +84,26 @@ ContentMeter.prototype = {
 		var base = this, 
 			bar  = base.bar;
 
-		window.addEventListener("scroll", function() {	
-			bar.style.width = base.getBarWidth() + "%";
-			if (base.settings.invisibilityClass) {
+		if (base.settings.barByWidth) {
+			window.addEventListener("scroll", function() {	
+				bar.style.width = base.getBarWidth() + "%";
+			});
+		}
+
+		if (base.settings.barByPosition) {
+			window.addEventListener("scroll", function() {	
+				bar.style.left = base.getBarPosition() + "%";
+			});
+		}
+
+		if (base.settings.invisibilityClass) {
+			window.addEventListener("scroll", function() {	
 				base.updateClasses();
-			}
-		});
+			});
+		}
 
 		window.addEventListener("resize", function() {
-			base.setContentVars();
+			base.readContentDimensions();
 			bar.style.width = base.getBarWidth() + "%";
 			if (base.settings.invisibilityClass) {
 				base.updateClasses();
@@ -91,45 +115,67 @@ ContentMeter.prototype = {
 		return document.documentElement.scrollTop || document.body.scrollTop;
 	},
 
-	setContentVars: function() {
+	readContentDimensions: function() {
 		var base = this;
 
-		base.cont = {
-			contentH        : base.contContainer.scrollHeight, 
-			visibleContentH : base.contContainer.clientHeight,
-			contentOffset   : base.contContainer.offsetTop
-		};
+		base.content = {
+			height        : base.contContainer.scrollHeight, 
+			visibleHeight : base.contContainer.clientHeight,
+			offset        : base.contContainer.offsetTop
+		}
 
-		base.cont.visibleContentH = 
-			base.cont.visibleContentH > window.innerHeight ? 
-				window.innerHeight : base.cont.visibleContentH;
+		base.content.visibleHeight = 
+			base.content.visibleHeight > window.innerHeight ? 
+				window.innerHeight : base.content.visibleHeight;
 	},
 
 	getBarWidth: function() {
 		var base = this,
 			barW = 0;
 
-		if (!base.cont) { 
-			base.setContentVars(); 
-		};
+		if (!base.content) { 
+			base.readContentDimensions(); 
+		}
 
 		barW = (
 			base.getDocScrolltop() 
-			- base.cont.contentOffset 
-			+ base.cont.visibleContentH
-			) / base.cont.contentH * 100;
+			- base.content.offset 
+			+ base.content.visibleHeight
+			) / base.content.height * 100;
 
-		barW = barW >= 0 ? barW : 0;
+		barW = barW > 0 ? barW : 0;
 		barW = barW < 100 ? barW : 100;
 
 		return barW;
 	}, 
 
+	getBarPosition: function() {
+		var base   = this,
+			barPos = 0;
+
+		if (!base.content) { 
+			base.readContentDimensions(); 
+		}
+
+		barPos = (
+			base.getDocScrolltop() 
+			- base.content.offset 
+			+ base.content.visibleHeight
+			) / base.content.height * 100;
+
+		// barPos = barPos > 0 ? barPos : 0;
+		// barPos = barPos < 100 ? barPos : 100;
+
+		barPos = barPos - 100;
+
+		return barPos;
+	}, 
+
 	updateClasses: function() {
 		var base = this;
 		
-		if (   (base.getDocScrolltop() > (base.cont.contentH + base.cont.contentOffset) 
-			|| (base.getDocScrolltop() + base.cont.visibleContentH) < base.cont.contentOffset)) {
+		if (   base.getDocScrolltop() > (base.content.height + base.content.offset) 
+			|| (base.getDocScrolltop() + base.content.visibleHeight) < base.content.offset) {
 
 			base.barContainer.classList.add("invisible");
 
@@ -137,4 +183,4 @@ ContentMeter.prototype = {
 			base.barContainer.classList.remove("invisible");
 		}
 	}
-};
+}
