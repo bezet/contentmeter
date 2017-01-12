@@ -1,0 +1,12 @@
+.contentmeter {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	height: 5px;
+}
+
+.contentmeter .contentmeter-bar {
+	height: 100%;
+	background-color: #F55600;
+}

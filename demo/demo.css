@@ -42,19 +42,6 @@ html {
 	background-color: #F55600;
 }
 
-.contentmeter {
-	position: fixed;
-	left: 0;
-	top: 0;
-	right: 0;
-	height: 5px;
-}
-
-.contentmeter .contentmeter-bar {
-	height: 100%;
-	background-color: #F55600;
-}
-
 .content-container {
 	width: 100%;
 	max-width: 768px;
@@ -117,7 +104,7 @@ html {
 	border-top: 36px solid #4D3333;
 }
 
-@keyframes bouncing_arrow { 
+@keyframes bouncing_arrow {
       0% {
         transform: translateY(0);
     }

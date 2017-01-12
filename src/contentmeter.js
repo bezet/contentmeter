@@ -1,4 +1,4 @@
-function ContentMeter(barSelector, contSelector, options) {
+const ContentMeter = function(barSelector, contSelector, options) {
 
 	this.barSelector = barSelector;
 	this.contSelector = contSelector;
@@ -9,7 +9,7 @@ function ContentMeter(barSelector, contSelector, options) {
 	}
 
 	this.init();
-}
+};
 
 ContentMeter.prototype = {
 
@@ -96,7 +96,7 @@ ContentMeter.prototype = {
 			base.contContainer.addEventListener("scroll", function() {
 				bar.style.width = base.getBarWidth2() + "%";
 			});
-			
+
 			if (base.settings.invisibilityClass) {
 				window.addEventListener("scroll", function() {
 					base.updateClasses();
@@ -199,3 +199,5 @@ ContentMeter.prototype = {
 		}
 	}
 }
+
+export default ContentMeter;
