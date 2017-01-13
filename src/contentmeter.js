@@ -1,35 +1,33 @@
-const ContentMeter = function(barSelector, contSelector, options) {
+class ContentMeter {
+	constructor(barSelector, contSelector, options) {
+		this.barSelector = barSelector;
+		this.contSelector = contSelector;
 
-	this.barSelector = barSelector;
-	this.contSelector = contSelector;
+		this.options = options;
+		this.settings = {
+			invisibilityClass: true
+		}
 
-	this.options = options;
-	this.settings = {
-		invisibilityClass: true
+		this.init();
 	}
 
-	this.init();
-};
-
-ContentMeter.prototype = {
-
-	init: function() {
+	init() {
 		var base     = this,
-			options  = base.options,
-			settings = base.settings;
+		options  = base.options,
+		settings = base.settings;
 
 		function getDOMElement(selector) {
 			var element;
 
 			if (typeof selector === "string"
-				&& selector.indexOf("#") !== -1
-				&& selector.indexOf("#") === 0) {
+			&& selector.indexOf("#") !== -1
+			&& selector.indexOf("#") === 0) {
 
 				element = document.getElementById(selector.slice(1));
 
 			} else if (typeof selector === "object"
-				&& selector.nodeType !== undefined
-				&& selector.length === undefined) {
+			&& selector.nodeType !== undefined
+			&& selector.length === undefined) {
 
 				element = selector;
 
@@ -56,11 +54,11 @@ ContentMeter.prototype = {
 		} else {
 			throw new Error("Wrong selectors or given selectors match no elements.");
 		}
-	},
+	}
 
-	createMeter: function() {
+	createMeter() {
 		var base = this,
-			bar;
+		bar;
 
 		base.barContainer.style.overflow = "hidden";
 
@@ -81,11 +79,11 @@ ContentMeter.prototype = {
 		base.barContainer.appendChild(bar);
 
 		base.bindUIEvents();
-	},
+	}
 
-	bindUIEvents: function() {
+	bindUIEvents() {
 		var base = this,
-			bar  = base.bar;
+		bar  = base.bar;
 
 		if (!base.content.selfScrolled) {
 			window.addEventListener("scroll", function() {
@@ -111,13 +109,13 @@ ContentMeter.prototype = {
 				base.updateClasses();
 			}
 		});
-	},
+	}
 
-	getDocScrolltop: function() {
+	getDocScrolltop() {
 		return document.documentElement.scrollTop || document.body.scrollTop;
-	},
+	}
 
-	readContentDimensions: function() {
+	readContentDimensions() {
 		var base = this;
 
 		base.content = {
@@ -136,20 +134,20 @@ ContentMeter.prototype = {
 		// base.content.visibleHeight =
 		// 	base.content.visibleHeight > window.innerHeight ?
 		// 		window.innerHeight : base.content.visibleHeight;
-	},
+	}
 
-	checkLimit: function(limited, min, max) {
+	checkLimit(limited, min, max) {
 		var number = limited;
 
 		number = number > min ? number : min;
 		number = number < max ? number : max;
 
 		return number;
-	},
+	}
 
-	getBarWidth: function() {
+	getBarWidth() {
 		var base = this,
-			barW = 0;
+		barW = 0;
 
 		if (!base.content) {
 			base.readContentDimensions();
@@ -159,18 +157,18 @@ ContentMeter.prototype = {
 			base.getDocScrolltop()
 			- base.content.offset
 			+ base.content.visibleHeight
-			) / base.content.height * 100;
+		) / base.content.height * 100;
 
 		barW = base.checkLimit(barW, 0, 100);
 
-		console.log(base.content);
+		// console.log(base.content);
 
 		return barW;
-	},
+	}
 
-	getBarWidth2: function() {
+	getBarWidth2() {
 		var base = this,
-			barW = 0;
+		barW = 0;
 
 		if (!base.content) {
 			base.readContentDimensions();
@@ -179,18 +177,18 @@ ContentMeter.prototype = {
 		barW = (
 			base.contContainer.scrollTop
 			+ base.content.visibleHeight
-			) / base.content.height * 100;
+		) / base.content.height * 100;
 
 		barW = base.checkLimit(barW, 0, 100);
 
 		return barW;
-	},
+	}
 
-	updateClasses: function() {
+	updateClasses() {
 		var base = this;
 
 		if (   base.getDocScrolltop() > (base.content.height + base.content.offset)
-			|| (base.getDocScrolltop() + base.content.visibleHeight) < base.content.offset) {
+		|| (base.getDocScrolltop() + base.content.visibleHeight) < base.content.offset) {
 
 			base.barContainer.classList.add("invisible");
 
@@ -198,6 +196,6 @@ ContentMeter.prototype = {
 			base.barContainer.classList.remove("invisible");
 		}
 	}
-}
+};
 
 export default ContentMeter;
