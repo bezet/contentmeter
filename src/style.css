@@ -1,4 +1,4 @@
-.contentmeter {
+.baza-contentmeter {
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -6,7 +6,7 @@
 	height: 5px;
 }
 
-.contentmeter .contentmeter-bar {
+.baza-contentmeter__bar {
 	height: 100%;
 	background-color: #F55600;
 }

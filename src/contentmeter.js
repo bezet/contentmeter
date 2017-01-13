@@ -63,7 +63,7 @@ class ContentMeter {
 		base.barContainer.style.overflow = "hidden";
 
 		bar = document.createElement("div");
-		bar.classList.add("contentmeter-bar");
+		bar.classList.add("baza-contentmeter__bar");
 
 		if (!base.content.selfScrolled) {
 			bar.style.width = base.getBarWidth() + "%";
