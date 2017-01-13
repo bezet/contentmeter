@@ -1,13 +1,14 @@
-*, *:before, *:after {
+*,
+*:before,
+*:after {
 	box-sizing: border-box;
 }
 
 html {
 	font-size: 10px;
-	font-size: 62.5%;
 }
 
-.nav {
+.main-nav {
 	position: relative;
 	top: 250px;
 	width: 460px;
@@ -18,7 +19,7 @@ html {
 	border-bottom: 5px solid #F55600;
 }
 
-.nav h1 {
+.main-nav__title {
 	height: 80px;
 	margin: 0;
 	font-size: 4rem;
@@ -26,7 +27,7 @@ html {
 	color: #4D3333;
 }
 
-.nav a {
+.main-nav__link {
 	display: inline-block;
 	width: 50%;
 	height: 80px;
@@ -38,11 +39,11 @@ html {
 	transition: background .3s ease;
 }
 
-.nav a:hover {
+.main-nav__link:hover {
 	background-color: #F55600;
 }
 
-.content-container {
+.content {
 	width: 100%;
 	max-width: 768px;
 	max-width: 34em;
@@ -52,61 +53,55 @@ html {
 	font-family: "Fondamento";
 }
 
-.content-container.scrolled-content {
-	width: 100%;
-	max-width: 768px;
-	max-width: 34em;
+.content--scrollable {
 	height: 500px;
 	margin: 0 auto;
 	margin-top: 50px;
 	overflow-y: scroll;
 }
 
-.content-container p:first-child:first-letter,
-.content-container.scrolled-content p:first-child:first-letter {
+.content p:first-child:first-letter {
   font-size: 6em;
 }
 
-.arrow-back {
+.back-btn {
 	display: block;
 	position: fixed;
-	/*top: 50vh;*/
 	left: 24px;
 	bottom: 20px;
 	width: 0;
 	height: 0;
+  text-indent: -10000px;
 
 	border-top: 24px solid transparent;
 	border-bottom: 24px solid transparent;
 	border-right: 24px solid #F55600;
 }
 
-.arrow {
+.bouncing-arrow {
 	display: block;
 	position: relative;
+  top: 50vh;
 	width: 0;
 	height: 0;
 	margin: 0 auto;
 
-    animation: .5s linear 0s infinite alternate bouncing_arrow;
+  border-left: 36px solid transparent;
+  border-right: 36px solid transparent;
+  border-top: 36px solid #4D3333;
+
+  animation: .5s linear 0s infinite alternate bouncing_arrow;
 }
 
-.arrow.arrow-up {
+.bouncing-arrow--upwards {
+  top: unset;
+  border-top: none;
 	bottom: 50vh;
-	border-left: 36px solid transparent;
-	border-right: 36px solid transparent;
 	border-bottom: 36px solid #4D3333;
 }
 
-.arrow.arrow-down {
-	top: 50vh;
-	border-left: 36px solid transparent;
-	border-right: 36px solid transparent;
-	border-top: 36px solid #4D3333;
-}
-
 @keyframes bouncing_arrow {
-      0% {
+    0% {
         transform: translateY(0);
     }
     40% {
