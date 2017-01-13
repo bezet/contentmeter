@@ -45,9 +45,9 @@ html {
 .content-container {
 	width: 100%;
 	max-width: 768px;
-	max-width: 50em;
-	margin: 100vh auto;
-	font-size: 1.6rem;
+	max-width: 34em;
+	margin: 80vh auto;
+	font-size: 2rem;
 	line-height: 200%;
 	font-family: "Fondamento";
 }
@@ -55,15 +55,16 @@ html {
 .content-container.scrolled-content {
 	width: 100%;
 	max-width: 768px;
-	max-width: 50em;
+	max-width: 34em;
 	height: 500px;
 	margin: 0 auto;
 	margin-top: 50px;
 	overflow-y: scroll;
 }
 
-.content-container p:first-child:first-letter {
-	font-size: 2em;
+.content-container p:first-child:first-letter,
+.content-container.scrolled-content p:first-child:first-letter {
+  font-size: 6em;
 }
 
 .arrow-back {
