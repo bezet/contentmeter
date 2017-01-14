@@ -6,6 +6,7 @@ module.exports = {
     path: 'dist',
     filename: 'baza-contentmeter.js'
   },
+  devtool: 'source-map',
   module: {
     loaders: [{
         test: /\.js?$/,
