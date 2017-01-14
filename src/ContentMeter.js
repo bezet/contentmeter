@@ -1,143 +1,89 @@
 class ContentMeter {
-	constructor(barSelector, contSelector, options) {
+	constructor( barSelector, contSelector, options ) {
 		this.barSelector = barSelector;
 		this.contSelector = contSelector;
-
-		this.options = options;
-		this.settings = {
-			invisibilityClass: true
-		}
 
 		this.init();
 	}
 
-	init() {
-		var base     = this,
-		options  = base.options,
-		settings = base.settings;
+  getDOMElement( selector ) {
+    let element = null;
 
-		function getDOMElement(selector) {
-			var element;
+    if ( typeof selector === "string"
+      && selector.indexOf( "#" ) !== -1
+      && selector.indexOf( "#" ) === 0
+    ) {
+      element = document.getElementById( selector.slice(1) );
 
-			if (typeof selector === "string"
-			&& selector.indexOf("#") !== -1
-			&& selector.indexOf("#") === 0) {
+    } else if ( typeof selector === "object"
+      && selector.nodeType !== undefined
+      && selector.length === undefined
+    ) {
+      element = selector;
+    }
 
-				element = document.getElementById(selector.slice(1));
+    return element;
+  }
 
-			} else if (typeof selector === "object"
-			&& selector.nodeType !== undefined
-			&& selector.length === undefined) {
+  readContentDimensions() {
+    this.content = {
+      height        : this.contContainer.scrollHeight,
+      visibleHeight : this.contContainer.clientHeight,
+      offset        : this.contContainer.offsetTop,
+      selfScrolled  : false
+    }
 
-				element = selector;
-
-			} else {
-				element = null;
-			}
-
-			return element;
-		}
-
-		base.barContainer = getDOMElement(base.barSelector);
-		base.contContainer = getDOMElement(base.contSelector);
-
-		for (var option in options) {
-			settings[option] = options[option];
-		}
-
-		// If exclusive options set to true, leave only first one enabled
-		// if (settings.barByWidth && settings.barByPosition) settings.barByPosition = false;
-
-		if (base.barContainer !== null && base.contContainer !== null) {
-			base.readContentDimensions();
-			base.createMeter();
-		} else {
-			throw new Error("Wrong selectors or given selectors match no elements.");
-		}
-	}
+    if ( this.content.visibleHeight > window.innerHeight ) {
+      this.content.visibleHeight = window.innerHeight;
+    } else {
+      this.content.selfScrolled = true;
+    }
+  }
 
 	createMeter() {
-		var base = this,
-		bar;
+		const bar = document.createElement( "div" );
+    bar.classList.add( "baza-contentmeter__bar" );
 
-		base.barContainer.style.overflow = "hidden";
-
-		bar = document.createElement("div");
-		bar.classList.add("baza-contentmeter__bar");
-
-		if (!base.content.selfScrolled) {
-			bar.style.width = base.getBarWidth() + "%";
+		if ( !this.content.selfScrolled ) {
+			bar.style.width = this.getBarWidth() + "%";
 		} else {
-			bar.style.width = base.getBarWidth2() + "%";
+			bar.style.width = this.getBarWidthOfScrollable() + "%";
 		}
 
-		if (base.settings.invisibilityClass) {
-			base.updateClasses();
-		}
+    this.barContainer.style.overflow = "hidden";
 
-		base.bar = bar;
-		base.barContainer.appendChild(bar);
+		this.updateClasses();
 
-		base.bindUIEvents();
+		this.bar = bar;
+		this.barContainer.appendChild( bar );
+
+		this.bindUIEvents();
 	}
 
 	bindUIEvents() {
-		var base = this,
-		bar  = base.bar;
+		const bar = this.bar;
+    const contContainer = this.contContainer;
 
-		if (!base.content.selfScrolled) {
-			window.addEventListener("scroll", function() {
-				bar.style.width = base.getBarWidth() + "%";
-			});
-
+		if ( !this.content.selfScrolled ) {
+			window.addEventListener( "scroll", () => bar.style.width = this.getBarWidth() + "%" );
 		} else {
-			base.contContainer.addEventListener("scroll", function() {
-				bar.style.width = base.getBarWidth2() + "%";
-			});
-
-			if (base.settings.invisibilityClass) {
-				window.addEventListener("scroll", function() {
-					base.updateClasses();
-				});
-			}
+			contContainer.addEventListener( "scroll", () => bar.style.width = this.getBarWidthOfScrollable() + "%" );
+      window.addEventListener( "scroll", () => this.updateClasses() );
 		}
 
-		window.addEventListener("resize", function() {
-			base.readContentDimensions();
-			bar.style.width = base.getBarWidth() + "%";
-			if (base.settings.invisibilityClass) {
-				base.updateClasses();
-			}
-		});
+		window.addEventListener( "resize", () => {
+			this.readContentDimensions();
+			bar.style.width = this.getBarWidth() + "%";
+			this.updateClasses();
+		} );
 	}
 
 	getDocScrolltop() {
 		return document.documentElement.scrollTop || document.body.scrollTop;
 	}
 
-	readContentDimensions() {
-		var base = this;
-
-		base.content = {
-			height        : base.contContainer.scrollHeight,
-			visibleHeight : base.contContainer.clientHeight,
-			offset        : base.contContainer.offsetTop,
-			selfScrolled  : false
-		}
-
-		if (base.content.visibleHeight > window.innerHeight) {
-			base.content.visibleHeight = window.innerHeight;
-		} else {
-			base.content.selfScrolled = true;
-		}
-
-		// base.content.visibleHeight =
-		// 	base.content.visibleHeight > window.innerHeight ?
-		// 		window.innerHeight : base.content.visibleHeight;
-	}
-
-	checkLimit(limited, min, max) {
-		var number = limited;
+	checkLimit( limited, min, max ) {
+		let number = limited;
 
 		number = number > min ? number : min;
 		number = number < max ? number : max;
@@ -146,56 +92,57 @@ class ContentMeter {
 	}
 
 	getBarWidth() {
-		var base = this,
-		barW = 0;
+		let barW = 0;
 
-		if (!base.content) {
-			base.readContentDimensions();
-		}
+		if ( !this.content ) this.readContentDimensions();
 
 		barW = (
-			base.getDocScrolltop()
-			- base.content.offset
-			+ base.content.visibleHeight
-		) / base.content.height * 100;
+			this.getDocScrolltop()
+			- this.content.offset
+			+ this.content.visibleHeight
+		) / this.content.height * 100;
 
-		barW = base.checkLimit(barW, 0, 100);
-
-		// console.log(base.content);
+		barW = this.checkLimit( barW, 0, 100 );
 
 		return barW;
 	}
 
-	getBarWidth2() {
-		var base = this,
-		barW = 0;
+	getBarWidthOfScrollable() {
+		let barW = 0;
 
-		if (!base.content) {
-			base.readContentDimensions();
-		}
+		if ( !this.content ) this.readContentDimensions();
 
 		barW = (
-			base.contContainer.scrollTop
-			+ base.content.visibleHeight
-		) / base.content.height * 100;
+			this.contContainer.scrollTop
+			+ this.content.visibleHeight
+		) / this.content.height * 100;
 
-		barW = base.checkLimit(barW, 0, 100);
+		barW = this.checkLimit( barW, 0, 100 );
 
 		return barW;
 	}
 
 	updateClasses() {
-		var base = this;
+		if ( this.getDocScrolltop() > ( this.content.height + this.content.offset )
+		  || ( this.getDocScrolltop() + this.content.visibleHeight ) < this.content.offset ) {
 
-		if (   base.getDocScrolltop() > (base.content.height + base.content.offset)
-		|| (base.getDocScrolltop() + base.content.visibleHeight) < base.content.offset) {
-
-			base.barContainer.classList.add("invisible");
-
+			this.barContainer.classList.add( "js-invisible" );
 		} else {
-			base.barContainer.classList.remove("invisible");
+			this.barContainer.classList.remove( "js-invisible" );
 		}
 	}
+
+  init() {
+    this.barContainer = this.getDOMElement( this.barSelector );
+    this.contContainer = this.getDOMElement( this.contSelector );
+
+    if ( this.barContainer !== null && this.contContainer !== null ) {
+      this.readContentDimensions();
+      this.createMeter();
+    } else {
+      throw new Error( "Wrong selectors or given selectors match no elements." );
+    }
+  }
 };
 
 export default ContentMeter;
