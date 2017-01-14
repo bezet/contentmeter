@@ -27,9 +27,9 @@ class ContentMeter {
 
   readContentDimensions() {
     this.content = {
-      height        : this.contContainer.scrollHeight,
-      visibleHeight : this.contContainer.clientHeight,
-      offset        : this.contContainer.offsetTop,
+      height        : this.contentContainer.scrollHeight,
+      visibleHeight : this.contentContainer.clientHeight,
+      offset        : this.contentContainer.offsetTop,
       selfScrolled  : false
     }
 
@@ -62,12 +62,12 @@ class ContentMeter {
 
 	bindUIEvents() {
 		const bar = this.bar;
-    const contContainer = this.contContainer;
+    const contentContainer = this.contentContainer;
 
 		if ( !this.content.selfScrolled ) {
 			window.addEventListener( "scroll", () => bar.style.width = this.getBarWidth() + "%" );
 		} else {
-			contContainer.addEventListener( "scroll", () => bar.style.width = this.getBarWidthOfScrollable() + "%" );
+			contentContainer.addEventListener( "scroll", () => bar.style.width = this.getBarWidthOfScrollable() + "%" );
       window.addEventListener( "scroll", () => this.updateClasses() );
 		}
 
@@ -82,8 +82,8 @@ class ContentMeter {
 		return document.documentElement.scrollTop || document.body.scrollTop;
 	}
 
-	checkLimit( limited, min, max ) {
-		let number = limited;
+	limitTheNumber( theNumber, min, max ) {
+		let number = theNumber;
 
 		number = number > min ? number : min;
 		number = number < max ? number : max;
@@ -102,7 +102,7 @@ class ContentMeter {
 			+ this.content.visibleHeight
 		) / this.content.height * 100;
 
-		barW = this.checkLimit( barW, 0, 100 );
+		barW = this.limitTheNumber( barW, 0, 100 );
 
 		return barW;
 	}
@@ -113,11 +113,11 @@ class ContentMeter {
 		if ( !this.content ) this.readContentDimensions();
 
 		barW = (
-			this.contContainer.scrollTop
+			this.contentContainer.scrollTop
 			+ this.content.visibleHeight
 		) / this.content.height * 100;
 
-		barW = this.checkLimit( barW, 0, 100 );
+		barW = this.limitTheNumber( barW, 0, 100 );
 
 		return barW;
 	}
@@ -134,9 +134,9 @@ class ContentMeter {
 
   init() {
     this.barContainer = this.getDOMElement( this.barSelector );
-    this.contContainer = this.getDOMElement( this.contSelector );
+    this.contentContainer = this.getDOMElement( this.contSelector );
 
-    if ( this.barContainer !== null && this.contContainer !== null ) {
+    if ( this.barContainer !== null && this.contentContainer !== null ) {
       this.readContentDimensions();
       this.createMeter();
     } else {
