@@ -25,38 +25,37 @@ class ContentMeter {
 
 	createMeter() {
     const bar = document.createElement( "div" );
+    this.bar = bar;
+
     bar.classList.add( "baza-contentmeter__bar" );
-		bar.style.width = this.getBarWidth( this.content.selfScrolled ) + "%";
+    bar.style.width = this.setBarWidth( this.content.selfScrolled );
 
     this.barContainer.style.overflow = "hidden";
     this.barContainer.appendChild( bar );
-
-    this.bar = bar;
 
     this.updateClasses();
 		this.bindUIEvents();
 	}
 
 	bindUIEvents() {
-		const bar = this.bar;
-    const contentContainer = this.contentContainer;
     const selfScrolled = this.content.selfScrolled;
 
-		if ( !selfScrolled ) {
-			window.addEventListener( "scroll", () => bar.style.width = this.getBarWidth() + "%" );
-		} else {
-			contentContainer.addEventListener( "scroll", () => bar.style.width = this.getBarWidth( selfScrolled ) + "%" );
-      window.addEventListener( "scroll", () => this.updateClasses() );
-		}
+    const scrollTarget = selfScrolled ? this.contentContainer : window;
+		scrollTarget.addEventListener( "scroll", () => this.setBarWidth( selfScrolled ) );
 
+    window.addEventListener( "scroll", () => this.updateClasses() );
 		window.addEventListener( "resize", () => {
 			this.readContentDimensions();
-			bar.style.width = this.getBarWidth() + "%";
+			this.setBarWidth( selfScrolled )
 			this.updateClasses();
 		} );
 	}
 
-	getBarWidth( ofScrollable = false ) {
+  setBarWidth( ofScrollable = false ) {
+    this.bar.style.width = this.getBarWidth( ofScrollable ) + "%";
+  }
+
+	getBarWidth( ofScrollable ) {
 		let barW = 0;
 
 		if ( !this.content ) this.readContentDimensions();
