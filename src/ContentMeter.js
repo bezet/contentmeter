@@ -8,6 +8,32 @@ class ContentMeter {
 		this.init();
 	}
 
+	updateClasses() {
+		if ( Utilities.getDocScrolltop() > ( this.content.height + this.content.offset )
+		  || ( Utilities.getDocScrolltop() + this.content.visibleHeight ) < this.content.offset ) {
+
+			this.barContainer.classList.add( "js-invisible" );
+		} else {
+			this.barContainer.classList.remove( "js-invisible" );
+		}
+	}
+
+  getBarWidth( ofScrollable ) {
+    let barW = 0;
+
+    if ( !this.content ) this.readContentDimensions();
+
+    barW = ofScrollable ? this.contentContainer.scrollTop : (Utilities.getDocScrolltop() - this.content.offset);
+    barW = (barW + this.content.visibleHeight) / this.content.height * 100;
+    barW = Utilities.limitTheNumber( barW, 0, 100 );
+
+    return barW;
+  }
+
+  setBarWidth( ofScrollable = false ) {
+    this.bar.style.width = this.getBarWidth( ofScrollable ) + "%";
+  }
+
   readContentDimensions() {
     this.content = {
       height        : this.contentContainer.scrollHeight,
@@ -23,7 +49,21 @@ class ContentMeter {
     }
   }
 
-	createMeter() {
+  bindUIEvents() {
+    const selfScrolled = this.content.selfScrolled;
+
+    const scrollTarget = selfScrolled ? this.contentContainer : window;
+    scrollTarget.addEventListener( "scroll", () => this.setBarWidth( selfScrolled ) );
+
+    window.addEventListener( "scroll", () => this.updateClasses() );
+    window.addEventListener( "resize", () => {
+      this.readContentDimensions();
+      this.setBarWidth( selfScrolled )
+      this.updateClasses();
+    } );
+  }
+
+  createMeter() {
     const bar = document.createElement( "div" );
     this.bar = bar;
 
@@ -34,48 +74,8 @@ class ContentMeter {
     this.barContainer.appendChild( bar );
 
     this.updateClasses();
-		this.bindUIEvents();
-	}
-
-	bindUIEvents() {
-    const selfScrolled = this.content.selfScrolled;
-
-    const scrollTarget = selfScrolled ? this.contentContainer : window;
-		scrollTarget.addEventListener( "scroll", () => this.setBarWidth( selfScrolled ) );
-
-    window.addEventListener( "scroll", () => this.updateClasses() );
-		window.addEventListener( "resize", () => {
-			this.readContentDimensions();
-			this.setBarWidth( selfScrolled )
-			this.updateClasses();
-		} );
-	}
-
-  setBarWidth( ofScrollable = false ) {
-    this.bar.style.width = this.getBarWidth( ofScrollable ) + "%";
+    this.bindUIEvents();
   }
-
-	getBarWidth( ofScrollable ) {
-		let barW = 0;
-
-		if ( !this.content ) this.readContentDimensions();
-
-    barW = ofScrollable ? this.contentContainer.scrollTop : (Utilities.getDocScrolltop() - this.content.offset);
-    barW = (barW + this.content.visibleHeight) / this.content.height * 100;
-		barW = Utilities.limitTheNumber( barW, 0, 100 );
-
-		return barW;
-	}
-
-	updateClasses() {
-		if ( Utilities.getDocScrolltop() > ( this.content.height + this.content.offset )
-		  || ( Utilities.getDocScrolltop() + this.content.visibleHeight ) < this.content.offset ) {
-
-			this.barContainer.classList.add( "js-invisible" );
-		} else {
-			this.barContainer.classList.remove( "js-invisible" );
-		}
-	}
 
   init() {
     this.barContainer = Utilities.getDOMElement( this.barSelector );
