@@ -4,8 +4,9 @@
   "description": "Bar visualizing content reading progress.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack",
-    "watch": "webpack -w"
+    "start": "webpack -w -d",
+    "bundle": "webpack -d",
+    "bundle:prod": "webpack -p"
   },
   "repository": {
     "type": "git",
