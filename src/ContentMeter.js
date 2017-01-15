@@ -1,9 +1,9 @@
 import Utilities from './Utilities.js';
 
 class ContentMeter {
-	constructor( barSelector, contSelector, options ) {
+	constructor( barSelector, contentSelector, options ) {
 		this.barSelector = barSelector;
-		this.contSelector = contSelector;
+		this.contentSelector = contentSelector;
 
 		this.init();
 	}
@@ -104,7 +104,7 @@ class ContentMeter {
 
   init() {
     this.barContainer = Utilities.getDOMElement( this.barSelector );
-    this.contentContainer = Utilities.getDOMElement( this.contSelector );
+    this.contentContainer = Utilities.getDOMElement( this.contentSelector );
 
     if ( this.barContainer !== null && this.contentContainer !== null ) {
       this.readContentDimensions();
