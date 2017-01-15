@@ -24,33 +24,28 @@ class ContentMeter {
   }
 
 	createMeter() {
-		const bar = document.createElement( "div" );
+    const bar = document.createElement( "div" );
     bar.classList.add( "baza-contentmeter__bar" );
-
-		if ( !this.content.selfScrolled ) {
-			bar.style.width = this.getBarWidth() + "%";
-		} else {
-			bar.style.width = this.getBarWidthOfScrollable() + "%";
-		}
+		bar.style.width = this.getBarWidth( this.content.selfScrolled ) + "%";
 
     this.barContainer.style.overflow = "hidden";
+    this.barContainer.appendChild( bar );
 
-		this.updateClasses();
+    this.bar = bar;
 
-		this.bar = bar;
-		this.barContainer.appendChild( bar );
-
+    this.updateClasses();
 		this.bindUIEvents();
 	}
 
 	bindUIEvents() {
 		const bar = this.bar;
     const contentContainer = this.contentContainer;
+    const selfScrolled = this.content.selfScrolled;
 
-		if ( !this.content.selfScrolled ) {
+		if ( !selfScrolled ) {
 			window.addEventListener( "scroll", () => bar.style.width = this.getBarWidth() + "%" );
 		} else {
-			contentContainer.addEventListener( "scroll", () => bar.style.width = this.getBarWidthOfScrollable() + "%" );
+			contentContainer.addEventListener( "scroll", () => bar.style.width = this.getBarWidth( selfScrolled ) + "%" );
       window.addEventListener( "scroll", () => this.updateClasses() );
 		}
 
@@ -61,32 +56,13 @@ class ContentMeter {
 		} );
 	}
 
-	getBarWidth() {
+	getBarWidth( ofScrollable = false ) {
 		let barW = 0;
 
 		if ( !this.content ) this.readContentDimensions();
 
-		barW = (
-			Utilities.getDocScrolltop()
-			- this.content.offset
-			+ this.content.visibleHeight
-		) / this.content.height * 100;
-
-		barW = Utilities.limitTheNumber( barW, 0, 100 );
-
-		return barW;
-	}
-
-	getBarWidthOfScrollable() {
-		let barW = 0;
-
-		if ( !this.content ) this.readContentDimensions();
-
-		barW = (
-			this.contentContainer.scrollTop
-			+ this.content.visibleHeight
-		) / this.content.height * 100;
-
+    barW = ofScrollable ? this.contentContainer.scrollTop : (Utilities.getDocScrolltop() - this.content.offset);
+    barW = (barW + this.content.visibleHeight) / this.content.height * 100;
 		barW = Utilities.limitTheNumber( barW, 0, 100 );
 
 		return barW;
