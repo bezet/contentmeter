@@ -31,7 +31,7 @@ class ContentMeter {
   }
 
   setBarWidth( ofScrollable = false ) {
-    this.bar.style.width = this.getBarWidth( ofScrollable ) + "%";
+    this.bar.style.width = `${this.getBarWidth( ofScrollable )}%`;
   }
 
   readContentDimensions() {
