@@ -35,18 +35,18 @@ class ContentMeter {
   }
 
   readContentDimensions() {
-    this.content = {
+  	this.content = {
       height        : this.contentContainer.scrollHeight,
       visibleHeight : this.contentContainer.clientHeight,
       offset        : this.contentContainer.offsetTop,
-      selfScrolled  : false
+      selfScrolled  : (this.contentContainer.scrollHeight > this.contentContainer.clientHeight)
     }
 
-    if ( this.content.visibleHeight > window.innerHeight ) {
-      this.content.visibleHeight = window.innerHeight;
-    } else {
-      this.content.selfScrolled = true;
-    }
+		if ( this.content.visibleHeight > window.innerHeight ) {
+			this.content.visibleHeight = window.innerHeight;
+		}
+
+		console.log(this.content);
   }
 
   bindUIEvents() {
