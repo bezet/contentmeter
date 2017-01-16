@@ -20,14 +20,14 @@ class ContentMeter {
 
   getBarWidth( ofScrollable ) {
     let barW = 0;
-
     if ( !this.content ) this.readContentDimensions();
 
-    barW = ofScrollable ? this.contentContainer.scrollTop : (Utilities.getDocScrolltop() - this.content.offset);
-    barW = (barW + this.content.visibleHeight) / this.content.height * 100;
-    barW = Utilities.limitTheNumber( barW, 0, 100 );
+    barW = (
+      (ofScrollable ? this.contentContainer.scrollTop : Utilities.getDocScrolltop())
+      + this.content.barBasicVal
+    ) / this.content.height * 100;
 
-    return barW;
+    return Utilities.limitTheNumber( barW, 0, 100 );
   }
 
   setBarWidth( ofScrollable = false ) {
@@ -35,16 +35,14 @@ class ContentMeter {
   }
 
   readContentDimensions() {
-  	this.content = {
-      height        : this.contentContainer.scrollHeight,
-      visibleHeight : this.contentContainer.clientHeight,
-      offset        : this.contentContainer.offsetTop,
-      selfScrolled  : (this.contentContainer.scrollHeight > this.contentContainer.clientHeight)
-    }
+    this.content = this.content || {};
 
-		if ( this.content.visibleHeight > window.innerHeight ) {
-			this.content.visibleHeight = window.innerHeight;
-		}
+    this.content.selfScrolled  = (this.contentContainer.scrollHeight > this.contentContainer.clientHeight);
+
+  	this.content.height        = this.contentContainer.scrollHeight;
+    this.content.visibleHeight = Math.min(window.innerHeight, this.contentContainer.clientHeight);
+    this.content.offset        = this.content.selfScrolled ? 0 : this.contentContainer.offsetTop;
+    this.content.barBasicVal   = this.content.offset * (-1) + this.content.visibleHeight;
 
 		console.log(this.content);
   }
