@@ -8,10 +8,17 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    loaders: [{
-        test: /\.js?$/,
-        exclude: /node_modules/,
+    loaders: [
+      {
         loader: 'babel-loader',
-    }]
+        test: /\.js?$/,
+        exclude: /node_modules/
+      },
+      {
+        loader: 'webpack-comment-remover-loader',
+        test: /\.js?$/,
+        exclude: /node_modules/
+      }
+    ]
   }
 };
