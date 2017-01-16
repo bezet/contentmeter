@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack -w -d",
     "bundle": "webpack -d",
-    "bundle:prod": "webpack -p"
+    "bundle:prod": "webpack -p",
+    "copy:style": "cp src/style.css dist/baza-contentmeter.css"
   },
   "repository": {
     "type": "git",
