@@ -23,12 +23,13 @@ class Utilities {
   }
 
   static limitTheNumber( theNumber, min, max ) {
-    let number = theNumber;
-
-    number = number > min ? number : min;
-    number = number < max ? number : max;
-
-    return number;
+    // let number = theNumber;
+    //
+    // number = number > min ? number : min;
+    // number = number < max ? number : max;
+    //
+    // return number;
+    return (theNumber > min) ? ((theNumber < max) ? theNumber : max) : min;
   }
 }
 
