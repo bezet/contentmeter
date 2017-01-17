@@ -18,20 +18,20 @@ class ContentMeter {
 		}
 	}
 
-  getBarWidth( ofScrollable ) {
+  getBarWidth() {
     let barW = 0;
     if ( !this.content ) this.readContentDimensions();
 
     barW = (
-      (ofScrollable ? this.contentContainer.scrollTop : Utilities.getDocScrolltop())
+      (this.content.selfScrolled ? this.contentContainer.scrollTop : Utilities.getDocScrolltop())
       + this.content.barBasicVal
     ) / this.content.height * 100;
 
     return Utilities.limitTheNumber( barW, 0, 100 );
   }
 
-  setBarWidth( ofScrollable = false ) {
-    this.bar.style.width = `${this.getBarWidth( ofScrollable )}%`;
+  setBarWidth() {
+    this.bar.style.width = `${this.getBarWidth()}%`;
   }
 
   readContentDimensions() {
@@ -48,15 +48,13 @@ class ContentMeter {
   }
 
   bindUIEvents() {
-    const selfScrolled = this.content.selfScrolled;
-
-    const scrollTarget = selfScrolled ? this.contentContainer : window;
-    scrollTarget.addEventListener( "scroll", () => this.setBarWidth( selfScrolled ) );
+    const scrollTarget = this.content.selfScrolled ? this.contentContainer : window;
+    scrollTarget.addEventListener( "scroll", () => this.setBarWidth() );
 
     window.addEventListener( "scroll", () => this.updateClasses() );
     window.addEventListener( "resize", () => {
       this.readContentDimensions();
-      this.setBarWidth( selfScrolled )
+      this.setBarWidth()
       this.updateClasses();
     } );
   }
@@ -66,7 +64,7 @@ class ContentMeter {
     this.bar = bar;
 
     bar.classList.add( "baza-contentmeter__bar" );
-    bar.style.width = this.setBarWidth( this.content.selfScrolled );
+    bar.style.width = this.setBarWidth();
 
     this.barContainer.style.overflow = "hidden";
     this.barContainer.appendChild( bar );
