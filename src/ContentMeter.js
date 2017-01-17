@@ -34,6 +34,10 @@ class ContentMeter {
     this.bar.style.width = `${this.getBarWidth()}%`;
   }
 
+	setCounterValue() {
+		this.counter.textContent = Math.ceil(this.getBarWidth());
+	}
+
   readContentDimensions() {
     this.content = this.content || {};
 
@@ -49,25 +53,36 @@ class ContentMeter {
 
   bindUIEvents() {
     const scrollTarget = this.content.selfScrolled ? this.contentContainer : window;
-    scrollTarget.addEventListener( "scroll", () => this.setBarWidth() );
+    scrollTarget.addEventListener( "scroll", () => {
+			this.setBarWidth();
+			this.setCounterValue();
+		} );
 
     window.addEventListener( "scroll", () => this.updateClasses() );
     window.addEventListener( "resize", () => {
       this.readContentDimensions();
-      this.setBarWidth()
+      this.setBarWidth();
+			this.setCounterValue();
       this.updateClasses();
     } );
   }
 
   createMeter() {
-    const bar = document.createElement( "div" );
-    this.bar = bar;
+		this.barContainer.style.overflow = "hidden";
 
-    bar.classList.add( "baza-contentmeter__bar" );
-    this.setBarWidth();
+		Utilities.createDOMElement(
+			'div', 'baza-contentmeter__bar', this.barContainer, ( element ) => {
+				this.bar = element;
+				this.setBarWidth();
+			}
+		);
 
-    this.barContainer.style.overflow = "hidden";
-    this.barContainer.appendChild( bar );
+		Utilities.createDOMElement(
+			'div', 'baza-contentmeter__counter', this.barContainer, ( element ) => {
+				this.counter = element;
+				this.setCounterValue();
+			}
+		);
 
     this.updateClasses();
     this.bindUIEvents();
