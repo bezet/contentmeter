@@ -64,7 +64,7 @@ class ContentMeter {
     this.bar = bar;
 
     bar.classList.add( "baza-contentmeter__bar" );
-    bar.style.width = this.setBarWidth();
+    this.setBarWidth();
 
     this.barContainer.style.overflow = "hidden";
     this.barContainer.appendChild( bar );
