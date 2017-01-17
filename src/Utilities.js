@@ -18,6 +18,21 @@ class Utilities {
     return element;
   }
 
+  static createDOMElement( element, className, parent, callback ) {
+    const DOMElement = document.createElement( element );
+    DOMElement.classList.add( className );
+
+    if ( parent ) {
+      parent.appendChild( DOMElement );
+    }
+
+    if ( callback ) {
+      callback( DOMElement );
+    }
+
+    return DOMElement;
+  }
+
   static getDocScrolltop() {
     return document.documentElement.scrollTop || document.body.scrollTop;
   }
