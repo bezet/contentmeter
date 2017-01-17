@@ -68,8 +68,6 @@ class ContentMeter {
   }
 
   createMeter() {
-		this.barContainer.style.overflow = "hidden";
-
 		Utilities.createDOMElement(
 			'div', 'baza-contentmeter__bar', this.barContainer, ( element ) => {
 				this.bar = element;
