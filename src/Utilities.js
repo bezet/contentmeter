@@ -2,13 +2,13 @@ class Utilities {
   static getDOMElement( selector ) {
     let element = null;
 
-    if ( typeof selector === "string"
-      && selector.indexOf( "#" ) !== -1
-      && selector.indexOf( "#" ) === 0
+    if ( typeof selector === 'string'
+      && selector.indexOf( '#' ) !== -1
+      && selector.indexOf( '#' ) === 0
     ) {
-      element = document.getElementById( selector.slice(1) );
+      element = document.getElementById( selector.slice( 1 ) );
 
-    } else if ( typeof selector === "object"
+    } else if ( typeof selector === 'object'
       && selector.nodeType !== undefined
       && selector.length === undefined
     ) {
@@ -38,7 +38,7 @@ class Utilities {
   }
 
   static limitTheNumber( theNumber, min, max ) {
-    return (theNumber > min) ? ((theNumber < max) ? theNumber : max) : min;
+    return ( theNumber > min ) ? ( ( theNumber < max ) ? theNumber : max ) : min;
   }
 }
 

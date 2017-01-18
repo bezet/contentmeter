@@ -1,29 +1,31 @@
 import Utilities from './Utilities.js';
 
 class ContentMeter {
-	constructor( barSelector, contentSelector, options ) {
-		this.barSelector = barSelector;
-		this.contentSelector = contentSelector;
+  constructor( barSelector, contentSelector ) {
+    this.barSelector = barSelector;
+    this.contentSelector = contentSelector;
 
-		this.init();
-	}
+    this.init();
+  }
 
-	updateClasses() {
-		if ( Utilities.getDocScrolltop() > ( this.content.height + this.content.offset )
-		  || ( Utilities.getDocScrolltop() + this.content.visibleHeight ) < this.content.offset ) {
+  updateClasses() {
+    if ( Utilities.getDocScrolltop() > ( this.content.height + this.content.offset )
+    || ( Utilities.getDocScrolltop() + this.content.visibleHeight ) < this.content.offset ) {
 
-			this.barContainer.classList.add( "js-invisible" );
-		} else {
-			this.barContainer.classList.remove( "js-invisible" );
-		}
-	}
+      this.barContainer.classList.add( 'js-invisible' );
+    } else {
+      this.barContainer.classList.remove( 'js-invisible' );
+    }
+  }
 
   getBarWidth() {
     let barW = 0;
-    if ( !this.content ) this.readContentDimensions();
+    if ( !this.content ) {
+      this.readContentDimensions();
+    }
 
     barW = (
-      (this.content.selfScrolled ? this.contentContainer.scrollTop : Utilities.getDocScrolltop())
+      ( this.content.selfScrolled ? this.contentContainer.scrollTop : Utilities.getDocScrolltop() )
       + this.content.barBasicVal
     ) / this.content.height * 100;
 
@@ -34,53 +36,55 @@ class ContentMeter {
     this.bar.style.width = `${this.getBarWidth()}%`;
   }
 
-	setCounterValue() {
-		this.counter.textContent = Math.ceil(this.getBarWidth());
-	}
+  setCounterValue() {
+    this.counter.textContent = Math.ceil( this.getBarWidth() );
+  }
 
   readContentDimensions() {
     this.content = this.content || {};
 
-    this.content.selfScrolled  = (this.contentContainer.scrollHeight > this.contentContainer.clientHeight);
+    this.content.selfScrolled  = ( this.contentContainer.scrollHeight > this.contentContainer.clientHeight );
 
-  	this.content.height        = this.contentContainer.scrollHeight;
-    this.content.visibleHeight = Math.min(window.innerHeight, this.contentContainer.clientHeight);
+    this.content.height        = this.contentContainer.scrollHeight;
+    this.content.visibleHeight = Math.min( window.innerHeight, this.contentContainer.clientHeight );
     this.content.offset        = this.content.selfScrolled ? 0 : this.contentContainer.offsetTop;
-    this.content.barBasicVal   = this.content.offset * (-1) + this.content.visibleHeight;
+    this.content.barBasicVal   = this.content.offset * ( -1 ) + this.content.visibleHeight;
 
-		console.log(this.content);
+    console.log( this.content );
   }
 
   bindUIEvents() {
     const scrollTarget = this.content.selfScrolled ? this.contentContainer : window;
-    scrollTarget.addEventListener( "scroll", () => {
-			this.setBarWidth();
-			this.setCounterValue();
-		} );
+    scrollTarget.addEventListener( 'scroll', () => {
+      this.setBarWidth();
+      this.setCounterValue();
+    } );
 
-    window.addEventListener( "scroll", () => this.updateClasses() );
-    window.addEventListener( "resize", () => {
+    window.addEventListener( 'scroll', () => {
+      return this.updateClasses();
+    } );
+    window.addEventListener( 'resize', () => {
       this.readContentDimensions();
       this.setBarWidth();
-			this.setCounterValue();
+      this.setCounterValue();
       this.updateClasses();
     } );
   }
 
   createMeter() {
-		Utilities.createDOMElement(
-			'div', 'baza-contentmeter__bar', this.barContainer, ( element ) => {
-				this.bar = element;
-				this.setBarWidth();
-			}
-		);
+    Utilities.createDOMElement(
+      'div', 'baza-contentmeter__bar', this.barContainer, ( element ) => {
+        this.bar = element;
+        this.setBarWidth();
+      }
+    );
 
-		Utilities.createDOMElement(
-			'div', 'baza-contentmeter__counter', this.barContainer, ( element ) => {
-				this.counter = element;
-				this.setCounterValue();
-			}
-		);
+    Utilities.createDOMElement(
+      'div', 'baza-contentmeter__counter', this.barContainer, ( element ) => {
+        this.counter = element;
+        this.setCounterValue();
+      }
+    );
 
     this.updateClasses();
     this.bindUIEvents();
@@ -94,9 +98,9 @@ class ContentMeter {
       this.readContentDimensions();
       this.createMeter();
     } else {
-      throw new Error( "Wrong selectors or given selectors match no elements." );
+      throw new Error( 'Wrong selectors or given selectors match no elements.' );
     }
   }
-};
+}
 
 export default ContentMeter;
