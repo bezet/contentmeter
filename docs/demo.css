@@ -71,11 +71,11 @@ html {
 }
 
 .content {
-	width: 90%;
-	max-width: 34em;
+	width: 100%;
+	max-width: 64em;
+	padding: 0 24px;
 	margin: 80vh auto;
-	font-size: 2rem;
-	line-height: 200%;
+	font-size: 1rem;
 	font-family: "Fondamento";
 }
 
@@ -90,11 +90,16 @@ html {
   font-size: 6em;
 }
 
-.content_p {
-	font-size: 1em;
+.content__p {
+	font-size: 1.6em;
+	line-height: 200%;
 }
 
 @media screen and (min-width: 450px) {
+	.content__p {
+		font-size: 2em;
+	}
+
 	.content--scrollable {
 		height: 500px;
 	}
