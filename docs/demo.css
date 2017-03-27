@@ -80,7 +80,7 @@ html {
 }
 
 .content--scrollable {
-	height: 500px;
+	height: 400px;
 	margin: 0 auto;
 	margin-top: 80px;
 	overflow-y: scroll;
@@ -88,6 +88,16 @@ html {
 
 .content p:first-child:first-letter {
   font-size: 6em;
+}
+
+.content_p {
+	font-size: 1em;
+}
+
+@media screen and (min-width: 450px) {
+	.content--scrollable {
+		height: 500px;
+	}
 }
 
 .back-btn {
