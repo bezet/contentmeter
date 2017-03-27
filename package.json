@@ -27,8 +27,6 @@
     "eslint-plugin-react": "^6.9.0",
     "rollup": "^0.41.4",
     "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-uglify": "^1.0.1",
-    "webpack": "^1.14.0",
-    "webpack-comment-remover-loader": "0.0.3"
+    "rollup-plugin-uglify": "^1.0.1"
   }
 }
