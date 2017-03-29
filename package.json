@@ -2,21 +2,20 @@
   "name": "baza-contentmeter",
   "version": "0.1.0",
   "description": "Bar visualizing content reading progress.",
-  "main": "index.js",
+  "main": "dist/baza-contentmeter.js",
+  "jsnext:main": "src/ContentMeter.js",
   "scripts": {
-    "start": "webpack -w -d",
-    "webpack": "webpack -d",
-    "webpack:prod": "webpack -p",
+    "start": "npm run rollup",
     "rollup": "rollup -c",
     "copy:style": "cp src/style.css dist/baza-contentmeter.css"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://be-zet@bitbucket.org/be-zet/baza-contentmeter-es6.git"
+    "url": "https://github.com/bezet/baza-contentmeter.git"
   },
   "author": "bezet",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/be-zet/baza-contentmeter-es6#readme",
+  "license": "MIT",
+  "homepage": "https://github.com/bezet/baza-contentmeter",
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
