@@ -18,14 +18,14 @@ npm i @bezet/contentmeter
 Either
 ```
 import Contentmeter from '@bezet/contentmeter';
-const myContentmeter = new Contentmeter();
+const myContentmeter = new Contentmeter('#content_meter', '#content_container');
 ```
 
 or
 ```
 <script type="text/javascript" src="dist/contentmeter.js"></script>
 <script type="text/javascript">
-    var myContentmeter = new Contentmeter();
+    var myContentmeter = new Contentmeter('#content_meter', '#content_container');
 </script>
 ```
 
