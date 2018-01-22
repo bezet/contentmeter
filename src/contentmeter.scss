@@ -1,4 +1,4 @@
-.baza-contentmeter {
+.contentmeter {
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -6,12 +6,12 @@
 	height: 5px;
 }
 
-.baza-contentmeter__bar {
+.contentmeter__bar {
 	height: 100%;
 	background-color: #F55600;
 }
 
-.baza-contentmeter__counter {
+.contentmeter__counter {
 	display: inline-block;
 	position: absolute;
 	top: 5px;
@@ -26,7 +26,7 @@
 	opacity: .5;
 }
 
-.baza-contentmeter__counter:after {
+.contentmeter__counter:after {
 	content: "%";
 	font-size: 30px;
 }

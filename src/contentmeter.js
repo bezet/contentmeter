@@ -1,6 +1,6 @@
 import Utilities from './utilities.js';
 
-class ContentMeter {
+class Contentmeter {
   constructor( barSelector, contentSelector ) {
     this.barSelector = barSelector;
     this.contentSelector = contentSelector;
@@ -73,14 +73,14 @@ class ContentMeter {
 
   createMeter() {
     Utilities.createDOMElement(
-      'div', 'baza-contentmeter__bar', this.barContainer, ( element ) => {
+      'div', 'contentmeter__bar', this.barContainer, ( element ) => {
         this.bar = element;
         this.setBarWidth();
       }
     );
 
     Utilities.createDOMElement(
-      'div', 'baza-contentmeter__counter', this.barContainer, ( element ) => {
+      'div', 'contentmeter__counter', this.barContainer, ( element ) => {
         this.counter = element;
         this.setCounterValue();
       }
@@ -103,4 +103,4 @@ class ContentMeter {
   }
 }
 
-export default ContentMeter;
+export default Contentmeter;
