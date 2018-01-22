@@ -1,0 +1,16 @@
+{
+  "name": "demo",
+  "version": "0.1.0",
+  "description": "Just library's demo",
+  "author": {
+    "name": "bezet",
+    "email": "bartosz.zadara@gmail.com",
+    "url": "https://github.com/bezet"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "devDependencies": {
+    "normalize.css": "^7.0.0"
+  }
+}
