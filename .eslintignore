@@ -1,0 +1,9 @@
+dist
+docs
+test
+
+*.config.js
+*.conf.js
+*.spec.js
+
+gulpfile*
