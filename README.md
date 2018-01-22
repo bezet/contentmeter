@@ -1,29 +1,40 @@
-# baza-contentmeter
+# contentmeter [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
 Simple bar showing progress while reading a content. It supports whole pages and scrollable containers.
+
+[DEMO](https://bezet.github.io/contentmeter/)
+
+## Installation
+
+```bash
+npm i @bezet/contentmeter
+```
+
 
 ## Usage
 ### Add styles
-`<link rel="stylesheet" type="text/css" href="dist/baza-contentmeter.css">`
+`<link rel="stylesheet" type="text/css" href="dist/contentmeter.css">`
 
 ### Add JS
 Either
 ```
-import ContentMeter from 'baza-contentmeter';
-const myContentMeter = new ContentMeter("#content_meter", "#content_container", {
-    invisibilityClass: false
-});
+import Contentmeter from '@bezet/contentmeter';
+const myContentmeter = new Contentmeter();
 ```
 
-or    
+or
 ```
-<script type="text/javascript" src="dist/baza-contentmeter.js"></script>
+<script type="text/javascript" src="dist/contentmeter.js"></script>
 <script type="text/javascript">
-    var myContentMeter = new ContentMeter(
-        "#content_meter",
-        "#content_container",
-        {
-            invisibilityClass: false
-        }
-    );
+    var myContentmeter = new Contentmeter('a');
 </script>
 ```
+
+## License
+
+MIT © [bezet](github.com/bezet)
+
+
+[npm-image]: https://badge.fury.io/js/%40bezet%2Fcontentmeter.svg
+[npm-url]: https://npmjs.org/package/@bezet/contentmeter
+[daviddm-image]: https://david-dm.org/bezet/contentmeter.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/bezet/contentmeter
