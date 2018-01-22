@@ -25,7 +25,7 @@ or
 ```
 <script type="text/javascript" src="dist/contentmeter.js"></script>
 <script type="text/javascript">
-    var myContentmeter = new Contentmeter('a');
+    var myContentmeter = new Contentmeter();
 </script>
 ```
 
