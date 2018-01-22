@@ -31,7 +31,7 @@ or
 
 ## License
 
-MIT © [bezet](github.com/bezet)
+MIT © [Bartek Zadara](github.com/bezet)
 
 
 [npm-image]: https://badge.fury.io/js/%40bezet%2Fcontentmeter.svg
