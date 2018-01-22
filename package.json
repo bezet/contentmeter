@@ -1,31 +1,54 @@
 {
-  "name": "baza-contentmeter",
+  "name": "@bezet/contentmeter",
   "version": "0.1.0",
   "description": "Bar visualizing content reading progress.",
-  "main": "dist/baza-contentmeter.js",
-  "jsnext:main": "src/ContentMeter.js",
+  "author": {
+    "name": "bezet",
+    "email": "bartosz.zadara@gmail.com",
+    "url": "https://github.com/bezet"
+  },
+  "main": "dist/contentmeter.js",
+  "jsnext:main": "src/contentmeter.js",
+  "module": "src/contentmeter.js",
   "scripts": {
-    "start": "npm run rollup",
-    "rollup": "rollup -c",
-    "copy:style": "cp src/style.css dist/baza-contentmeter.css"
+    "demo": "gulp demo",
+    "build:dev": "gulp build",
+    "build:prod": "gulp build --production",
+    "build": "npm run build:prod",
+    "serve": "gulp serve",
+    "test": "mocha --require babel-core/register",
+    "link": "npm link && cd docs && npm link @bezet/contentmeter && cd ..",
+    "install:all": "npm i && cd docs && npm i && cd ..",
+    "start": "gulp"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bezet/baza-contentmeter.git"
-  },
-  "author": "bezet",
-  "license": "MIT",
-  "homepage": "https://github.com/bezet/baza-contentmeter",
   "devDependencies": {
-    "babel-core": "^6.21.0",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-preset-latest": "^6.16.0",
-    "eslint": "^3.13.1",
-    "eslint-plugin-react": "^6.9.0",
-    "rollup": "^0.41.4",
-    "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-uglify": "^1.0.1"
-  }
+    "autoprefixer": "^7.1.6",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.4.0",
+    "browser-sync": "^2.18.13",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "mocha": "^4.0.1",
+    "node-sass": "^4.7.2",
+    "parallelshell": "^3.0.2",
+    "run-sequence": "^2.2.0",
+    "uglifyjs-webpack-plugin": "^1.1.1",
+    "webpack": "^3.8.1",
+    "webpack-merge": "^4.1.1",
+    "webpack-stream": "^4.0.0",
+    "yargs": "^10.0.3"
+  },
+  "keywords": [
+    "meter"
+  ],
+  "repository": "https://github.com/bezet/baza-contentmeter",
+  "license": "MIT"
 }
