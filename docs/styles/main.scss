@@ -12,9 +12,15 @@ html {
   font-family: sans-serif;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .main-nav {
-	position: relative;
-	top: 50px;
 	width: 100%;
 	max-width: 460px;
 	padding: 0 24px;
@@ -24,25 +30,21 @@ html {
 	transition: top .3s ease;
 }
 
-@media screen and (min-width: 450px) {
-	.main-nav {
-		top: 250px
-	}
-}
-
-.main-nav__title {
+.lib-name {
+  display: inline-block;
 	padding: 0 0 40px;
 	margin: 0;
-	font-size: 8vw;
+	font-size: 3.6rem;
 	line-height: 1;
 	font-family: "Carter One";
-	color: #4D3333;
-}
+  color: #4D3333;
 
-@media screen and (min-width: 450px) {
-	.main-nav__title {
-		font-size: 4rem;
-	}
+  span {
+    display: block;
+    text-align: left;
+    font-size: .5em;
+    font-weight: 400;
+  }
 }
 
 .main-nav__link {
