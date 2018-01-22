@@ -1,4 +1,4 @@
-import Utilities from './Utilities.js';
+import Utilities from './utilities.js';
 
 class ContentMeter {
   constructor( barSelector, contentSelector ) {
