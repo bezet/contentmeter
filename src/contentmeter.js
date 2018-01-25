@@ -11,8 +11,8 @@ class Contentmeter {
       this.settings[option] = options[option];
     });
 
-    this.barContainer = Utilities.getDOMElement(this.settings.barSelector);
-    this.contentContainer = Utilities.getDOMElement(this.settings.contentSelector);
+    this.barContainer = document.querySelector(this.settings.barSelector);
+    this.contentContainer = document.querySelector(this.settings.contentSelector);
 
     if (this.barContainer !== null && this.contentContainer !== null) {
       this.readContentDimensions();
