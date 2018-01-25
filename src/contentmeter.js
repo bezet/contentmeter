@@ -8,7 +8,7 @@ class Contentmeter {
     this.init();
   }
 
-  getBarWidth() {
+  calcBarWidth() {
     if (!this.content) {
       this.readContentDimensions();
     }
@@ -21,11 +21,11 @@ class Contentmeter {
   }
 
   setBarWidth() {
-    this.bar.style.width = `${this.getBarWidth()}%`;
+    this.bar.style.width = `${this.calcBarWidth()}%`;
   }
 
   setCounterValue() {
-    this.counter.textContent = Math.ceil(this.getBarWidth());
+    this.counter.textContent = Math.ceil(this.calcBarWidth());
   }
 
   readContentDimensions() {
