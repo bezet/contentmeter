@@ -1,4 +1,5 @@
 import Contentmeter from '@bezet/contentmeter';
-const myContentmeter = new Contentmeter('#content_meter', '#content_container', {
-  invisibilityClass: false
+const myContentmeter = new Contentmeter({
+  barSelector: '#content_meter',
+  contentSelector: '#content_container',
 });
