@@ -34,24 +34,24 @@ class Contentmeter {
     this.content.barBasicVal = (-1 * this.content.offset) + this.content.visibleHeight;
   }
 
-  calcBarWidth() {
+  calcBarScale() {
     if (!this.content) {
       this.readContentDimensions();
     }
 
     const containerScrollTop = this.content.selfScrolled ?
       this.contentContainer.scrollTop : Utilities.getDocScrolltop();
-    const barW = ((containerScrollTop + this.content.barBasicVal) / this.content.height) * 100;
+    const barW = ((containerScrollTop + this.content.barBasicVal) / this.content.height);
 
-    return Utilities.limitTheNumber(barW, 0, 100);
+    return Utilities.limitTheNumber(barW, 0, 1);
   }
 
   setBarWidth() {
-    this.bar.style.width = `${this.calcBarWidth()}%`;
+    this.bar.style.transform = `scale(${this.calcBarScale()}, 1)`;
   }
 
   setCounterValue() {
-    this.counter.textContent = Math.ceil(this.calcBarWidth());
+    this.counter.textContent = `${Math.ceil(this.calcBarScale() * 100)}`;
   }
 
   resizeHandler() {
