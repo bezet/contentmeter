@@ -22,6 +22,18 @@ class Contentmeter {
     }
   }
 
+  readContentDimensions() {
+    this.content = this.content || {};
+
+    this.content.selfScrolled =
+      (this.contentContainer.scrollHeight > this.contentContainer.clientHeight);
+
+    this.content.height = this.contentContainer.scrollHeight;
+    this.content.visibleHeight = Math.min(window.innerHeight, this.contentContainer.clientHeight);
+    this.content.offset = this.content.selfScrolled ? 0 : this.contentContainer.offsetTop;
+    this.content.barBasicVal = (-1 * this.content.offset) + this.content.visibleHeight;
+  }
+
   calcBarWidth() {
     if (!this.content) {
       this.readContentDimensions();
@@ -42,25 +54,13 @@ class Contentmeter {
     this.counter.textContent = Math.ceil(this.calcBarWidth());
   }
 
-  readContentDimensions() {
-    this.content = this.content || {};
-
-    this.content.selfScrolled =
-      (this.contentContainer.scrollHeight > this.contentContainer.clientHeight);
-
-    this.content.height = this.contentContainer.scrollHeight;
-    this.content.visibleHeight = Math.min(window.innerHeight, this.contentContainer.clientHeight);
-    this.content.offset = this.content.selfScrolled ? 0 : this.contentContainer.offsetTop;
-    this.content.barBasicVal = (-1 * this.content.offset) + this.content.visibleHeight;
-  }
-
-  resizeHandler(event) {
+  resizeHandler() {
     this.readContentDimensions();
     this.setBarWidth();
     this.setCounterValue();
   }
 
-  scrollHandler(event) {
+  scrollHandler() {
     this.setBarWidth();
     this.setCounterValue();
   }
@@ -68,8 +68,8 @@ class Contentmeter {
   bindEvents() {
     const scrollTarget = this.content.selfScrolled ? this.contentContainer : window;
 
-    scrollTarget.addEventListener('scroll', event => this.scrollHandler(event));
-    window.addEventListener('resize', event => this.resizeHandler(event));
+    scrollTarget.addEventListener('scroll', this.scrollHandler);
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   createMeter() {
