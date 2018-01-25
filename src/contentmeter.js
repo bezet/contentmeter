@@ -68,8 +68,8 @@ class Contentmeter {
   bindEvents() {
     const scrollTarget = this.content.selfScrolled ? this.contentContainer : window;
 
-    scrollTarget.addEventListener('scroll', this.scrollHandler);
-    window.addEventListener('resize', this.resizeHandler);
+    scrollTarget.addEventListener('scroll', () => this.scrollHandler());
+    window.addEventListener('resize', () => this.resizeHandler());
   }
 
   createMeter() {
