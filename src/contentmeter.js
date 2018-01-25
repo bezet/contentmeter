@@ -40,18 +40,22 @@ class Contentmeter {
     this.content.barBasicVal = (-1 * this.content.offset) + this.content.visibleHeight;
   }
 
+  resizeHandler(event) {
+    this.readContentDimensions();
+    this.setBarWidth();
+    this.setCounterValue();
+  }
+
+  scrollHandler(event) {
+    this.setBarWidth();
+    this.setCounterValue();
+  }
+
   bindUIEvents() {
     const scrollTarget = this.content.selfScrolled ? this.contentContainer : window;
-    scrollTarget.addEventListener('scroll', () => {
-      this.setBarWidth();
-      this.setCounterValue();
-    });
 
-    window.addEventListener('resize', () => {
-      this.readContentDimensions();
-      this.setBarWidth();
-      this.setCounterValue();
-    });
+    scrollTarget.addEventListener('scroll', event => this.scrollHandler(event));
+    window.addEventListener('resize', event => this.resizeHandler(event));
   }
 
   createMeter() {
