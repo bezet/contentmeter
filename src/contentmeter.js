@@ -1,11 +1,18 @@
 import Utilities from './utilities';
 
 class Contentmeter {
-  constructor(barSelector, contentSelector) {
-    this.barSelector = barSelector;
-    this.contentSelector = contentSelector;
-    this.barContainer = Utilities.getDOMElement(this.barSelector);
-    this.contentContainer = Utilities.getDOMElement(this.contentSelector);
+  constructor(options = {}) {
+    this.settings = {
+      barSelector: '#content_meter',
+      contentSelector: '#content_container',
+    };
+
+    Object.keys(options).forEach((option) => {
+      this.settings[option] = options[option];
+    });
+
+    this.barContainer = Utilities.getDOMElement(this.settings.barSelector);
+    this.contentContainer = Utilities.getDOMElement(this.settings.contentSelector);
 
     if (this.barContainer !== null && this.contentContainer !== null) {
       this.readContentDimensions();
