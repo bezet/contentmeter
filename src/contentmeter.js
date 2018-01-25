@@ -9,14 +9,13 @@ class Contentmeter {
   }
 
   getBarWidth() {
-    let barW = 0;
     if (!this.content) {
       this.readContentDimensions();
     }
 
-    barW =
-      (((this.content.selfScrolled ? this.contentContainer.scrollTop : Utilities.getDocScrolltop())
-      + this.content.barBasicVal) / this.content.height) * 100;
+    const containerScrollTop = this.content.selfScrolled ?
+      this.contentContainer.scrollTop : Utilities.getDocScrolltop();
+    const barW = ((containerScrollTop + this.content.barBasicVal) / this.content.height) * 100;
 
     return Utilities.limitTheNumber(barW, 0, 100);
   }
