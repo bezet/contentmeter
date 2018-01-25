@@ -15,8 +15,8 @@ class Contentmeter {
     }
 
     barW =
-      ((this.content.selfScrolled ? this.contentContainer.scrollTop : Utilities.getDocScrolltop())
-      + this.content.barBasicVal) / (this.content.height * 100);
+      (((this.content.selfScrolled ? this.contentContainer.scrollTop : Utilities.getDocScrolltop())
+      + this.content.barBasicVal) / this.content.height) * 100;
 
     return Utilities.limitTheNumber(barW, 0, 100);
   }
