@@ -8,15 +8,6 @@ class Contentmeter {
     this.init();
   }
 
-  updateClasses() {
-    if (Utilities.getDocScrolltop() > (this.content.height + this.content.offset)
-    || (Utilities.getDocScrolltop() + this.content.visibleHeight) < this.content.offset) {
-      this.barContainer.classList.add('js-invisible');
-    } else {
-      this.barContainer.classList.remove('js-invisible');
-    }
-  }
-
   getBarWidth() {
     let barW = 0;
     if (!this.content) {
@@ -57,14 +48,10 @@ class Contentmeter {
       this.setCounterValue();
     });
 
-    window.addEventListener('scroll', () => {
-      return this.updateClasses();
-    });
     window.addEventListener('resize', () => {
       this.readContentDimensions();
       this.setBarWidth();
       this.setCounterValue();
-      this.updateClasses();
     });
   }
 
@@ -83,7 +70,6 @@ class Contentmeter {
       }
    );
 
-    this.updateClasses();
     this.bindUIEvents();
   }
 
