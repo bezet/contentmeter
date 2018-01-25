@@ -4,8 +4,15 @@ class Contentmeter {
   constructor(barSelector, contentSelector) {
     this.barSelector = barSelector;
     this.contentSelector = contentSelector;
+    this.barContainer = Utilities.getDOMElement(this.barSelector);
+    this.contentContainer = Utilities.getDOMElement(this.contentSelector);
 
-    this.init();
+    if (this.barContainer !== null && this.contentContainer !== null) {
+      this.readContentDimensions();
+      this.createMeter();
+    } else {
+      throw new Error('Wrong selectors or given selectors match no elements.');
+    }
   }
 
   calcBarWidth() {
@@ -74,18 +81,6 @@ class Contentmeter {
    );
 
     this.bindEvents();
-  }
-
-  init() {
-    this.barContainer = Utilities.getDOMElement(this.barSelector);
-    this.contentContainer = Utilities.getDOMElement(this.contentSelector);
-
-    if (this.barContainer !== null && this.contentContainer !== null) {
-      this.readContentDimensions();
-      this.createMeter();
-    } else {
-      throw new Error('Wrong selectors or given selectors match no elements.');
-    }
   }
 }
 
