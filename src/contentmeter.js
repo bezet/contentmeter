@@ -51,7 +51,7 @@ class Contentmeter {
     this.setCounterValue();
   }
 
-  bindUIEvents() {
+  bindEvents() {
     const scrollTarget = this.content.selfScrolled ? this.contentContainer : window;
 
     scrollTarget.addEventListener('scroll', event => this.scrollHandler(event));
@@ -73,7 +73,7 @@ class Contentmeter {
       }
    );
 
-    this.bindUIEvents();
+    this.bindEvents();
   }
 
   init() {
